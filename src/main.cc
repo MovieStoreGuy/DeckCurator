@@ -7,13 +7,15 @@
 #include "../include/Evaluator.hpp"
 
 int main(int argc, const char * argv[]) {
-    uint8_t mana[COLOUR_COUNT] = {1};
-    DeckCurator::Card * land = new DeckCurator::Card("Super Awesome Fun Land", mana);
+    DeckCurator::Card * land = new DeckCurator::Card("Super Awesome Fun Land");
+    land->setColourCost(DeckCurator::Card::Colourless, 1);
     land->addType(DeckCurator::Card::Legendary);
     land->addType(DeckCurator::Card::Land);
-    DeckCurator::Card * Creature = new DeckCurator::Card("Meerfolk holmes", mana);
+    DeckCurator::Card * Creature = new DeckCurator::Card("Meerfolk holmes");
     Creature->addType(DeckCurator::Card::Legendary);
     Creature->addType(DeckCurator::Card::Creature);
+    Creature->setColourCost(DeckCurator::Card::Colourless, 1);
+    Creature->setColourCost(DeckCurator::Card::Red, 1);
     DeckCurator::Deck deck;
     deck.addCard(land);
     deck.addCard(Creature);

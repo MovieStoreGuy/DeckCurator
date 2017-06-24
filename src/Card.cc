@@ -7,7 +7,7 @@ DeckCurator::Card::Card(std::string name) {
     }
 }
 
-void DeckCurator::Card::setColourCost(int colour, int cost) {
+void DeckCurator::Card::setColourCost(int colour, uint8_t cost) {
     if (colour < COLOUR_COUNT) {
         mana[colour] = cost;
     }
