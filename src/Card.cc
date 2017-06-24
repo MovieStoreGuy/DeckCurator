@@ -1,9 +1,15 @@
 #include "../include/Card.hpp"
 
-DeckCurator::Card::Card(std::string name, uint8_t mana[COLOUR_COUNT]) {
+DeckCurator::Card::Card(std::string name) {
     this->name = name;
-    for (int i = 0; i < COLOUR_COUNT; ++i) {
-        this->mana[i] = mana[i];
+    for (size_t i = 0; i < COLOUR_COUNT; ++i) {
+        mana[i] = 0;
+    }
+}
+
+void DeckCurator::Card::setColourCost(int colour, int cost) {
+    if (colour < COLOUR_COUNT) {
+        mana[colour] = cost;
     }
 }
 

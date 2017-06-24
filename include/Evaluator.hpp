@@ -9,11 +9,12 @@
 namespace DeckCurator {
     class Evaluator {
     public:
-        Evaluator(const DeckCurator::Deck*);
+        Evaluator();
+        void setDeck(DeckCurator::Deck* deck);
         void addEvaluationFunction(std::function<double(const DeckCurator::Deck*)> func);
         double evaluate();
     private:
-        const DeckCurator::Deck* deck;
+        DeckCurator::Deck* deck;
         std::vector<std::function<double(const DeckCurator::Deck*)> > evaluators;
     };
 };

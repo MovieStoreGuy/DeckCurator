@@ -17,7 +17,8 @@ int main(int argc, const char * argv[]) {
     DeckCurator::Deck deck;
     deck.addCard(land);
     deck.addCard(Creature);
-    std::unique_ptr<DeckCurator::Evaluator> eval(new DeckCurator::Evaluator(&deck));
+    std::unique_ptr<DeckCurator::Evaluator> eval(new DeckCurator::Evaluator());
+    eval->setDeck(&deck);
     eval->addEvaluationFunction([](const DeckCurator::Deck* deck)->double{
         // Optimal Draw function
         // Calculate all shingles
@@ -29,7 +30,8 @@ int main(int argc, const char * argv[]) {
             }
             result *= hand_weight;
         }
-        return result;
+        // Keeping the result within [0,1]
+        return std::min(std::max(result, 0.0), 1.0);
     });
     std::cout << eval->evaluate() << std::endl;
     return 0;

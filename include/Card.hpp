@@ -31,7 +31,7 @@ namespace DeckCurator {
             Black      = 5
         } Colour;
 
-        Card(std::string name, uint8_t costs[COLOUR_COUNT]);
+        Card(std::string name);
         /*
          *  Card - getname
          *
@@ -64,6 +64,13 @@ namespace DeckCurator {
          *  @return the converted mana cost of the card
          */
         uint8_t convertedManaCost() const;
+        /*
+         *  Card - setColourCost
+         *
+         *  @param colour The colour to set (use card::Colour)
+         *  @param cost   The cost to be set to the colour
+         */
+        void setColourCost(int colour, uint8_t cost);
         /*
          *  Card - getColourCost
          *

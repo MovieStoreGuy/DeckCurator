@@ -1,8 +1,12 @@
 #include "../include/Evaluator.hpp"
 
-DeckCurator::Evaluator::Evaluator(const DeckCurator::Deck* deck) {
+DeckCurator::Evaluator::Evaluator() {
+    this->deck = nullptr;
+}
+
+void DeckCurator::Evaluator::setDeck(DeckCurator::Deck* deck) {
     if (deck == nullptr) {
-        abort();
+        return;
     }
     this->deck = deck;
 }
@@ -15,6 +19,10 @@ void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const De
 }
 
 double DeckCurator::Evaluator::evaluate() {
+    if (deck == nullptr) {
+        std::cerr << "Deck is not set" << std::endl;
+        return 0.0;
+    }
     double metric = 1.0;
     // Will need to make this parallel for faster results
     for (auto& func : evaluators) {
