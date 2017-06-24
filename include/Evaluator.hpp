@@ -1,0 +1,21 @@
+#ifndef __DECK_CURATOR__EVALUATOR_H
+#define __DECK_CURATOR__EVALUATOR_H
+
+#include "Deck.hpp"
+#include <cstdlib>
+#include <functional>
+#include <vector>
+
+namespace DeckCurator {
+    class Evaluator {
+    public:
+        Evaluator(const DeckCurator::Deck*);
+        void addEvaluationFunction(std::function<double(const DeckCurator::Deck*)> func);
+        double evaluate();
+    private:
+        const DeckCurator::Deck* deck;
+        std::vector<std::function<double(const DeckCurator::Deck*)> > evaluators;
+    };
+};
+
+#endif
