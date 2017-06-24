@@ -19,9 +19,6 @@ int main(int argc, const char * argv[]) {
     deck.addCard(Creature);
     std::unique_ptr<DeckCurator::Evaluator> eval(new DeckCurator::Evaluator(&deck));
     eval->addEvaluationFunction([](const DeckCurator::Deck* deck)->double{
-        return deck->size() / deck->size();
-    });
-    eval->addEvaluationFunction([](const DeckCurator::Deck* deck)->double{
         // Optimal Draw function
         // Calculate all shingles
         double result = 1.0;
