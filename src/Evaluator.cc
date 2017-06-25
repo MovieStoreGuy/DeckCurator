@@ -15,7 +15,8 @@ void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const De
     if (func == nullptr) {
         abort();
     }
-    evaluators.push_back(func);
+    // Forces the all functions to be run asynchronously
+    evaluators.push_back(std::async(std::launch::async,func,deck));
 }
 
 double DeckCurator::Evaluator::evaluate() {
@@ -24,9 +25,9 @@ double DeckCurator::Evaluator::evaluate() {
         return 0.0;
     }
     double metric = 1.0;
-    // Will need to make this parallel for faster results
     for (auto& func : evaluators) {
-        metric *= func(this->deck);
+        // halts progress untill function returns
+        metric *= func.get();
     }
-    return metric;
+    return std::abs(std::min(std::max(metric, 0.0), 1.0));
 }

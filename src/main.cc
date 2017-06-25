@@ -14,7 +14,7 @@ int main(int argc, const char * argv[]) {
     DeckCurator::Card * Creature = new DeckCurator::Card("Meerfolk holmes");
     Creature->addType(DeckCurator::Card::Legendary);
     Creature->addType(DeckCurator::Card::Creature);
-    Creature->setColourCost(DeckCurator::Card::Colourless, 1);
+    Creature->setColourCost(DeckCurator::Card::Colourless, 4);
     Creature->setColourCost(DeckCurator::Card::Red, 1);
     DeckCurator::Deck deck;
     deck.addCard(land);
@@ -24,10 +24,11 @@ int main(int argc, const char * argv[]) {
     eval->addEvaluationFunction([](const DeckCurator::Deck* deck)->double{
         // Optimal Draw function
         // Calculate all shingles
+        const size_t hand_size = 7;
         double result = 1.0;
         for (size_t i = 0; i < deck->size(); ++i) {
             double hand_weight = 0.0;
-            for (size_t k = i; k < std::min(deck->size(), i + 7); ++k) {
+            for (size_t k = i; k < std::min(deck->size(), i + hand_size); ++k) {
                 hand_weight += (3 - deck->getCardAt(k)->convertedManaCost()) / 3.0;
             }
             result *= hand_weight;
