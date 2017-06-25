@@ -1,19 +1,23 @@
 # Deck Curator -- Makefile
-
+OS		:= $(shell uname)
 CC		:= g++
-CFLAGS	:= -Wall -Wextra -std=c++11
+CFLAGS	:= -Wall -Wextra -std=c++11 `python-config --cflags`
+CLIBS	:= -shared `python-config --ldflag`
 
-MAIN	:= main
+ifeq ($(OS),Darwin)
+	CLIBS	+= -framework Python
+endif
+
+MAIN	:= DeckCurator.so
 SRCS	:= $(wildcard src/*.cc)
 OBJS	:= $(SRCS:src/%.cc=objs/%.o)
-LIBS	:=
 
 .PHONY:	all clean
 
-all : $(MAIN)
+all: $(MAIN)
 
-$(MAIN): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $(OBJS) $(LIBS)
+$(MAIN) : $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS) $(CLIBS)
 
 objs/%.o: src/%.cc include/%.hpp
 	$(CC) $(CFLAGS) -c $< -o $@
