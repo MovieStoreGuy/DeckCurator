@@ -1,5 +1,5 @@
 # Deck Curator
-This project looks at evaluating Magic The Gathering (TM) decks to see how well
+This project looks at evaluating Magic The Gathering™ decks to see how well
 they preform against different metric functions.
 
 
