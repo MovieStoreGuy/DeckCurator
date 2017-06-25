@@ -1,2 +1,3 @@
-main
-objs/*
+# Ignore C++ binary files
+*.o
+

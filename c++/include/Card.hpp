@@ -31,6 +31,17 @@ namespace DeckCurator {
             Black      = 5
         } Colour;
 
+        static enum Abilities {
+            Cyclying,
+            Flying,
+            Flash,
+            Hexproof,
+            Indestructable,
+            Shroud,
+            Tap_Target,
+            Tap_Creature,
+        } Abilities;
+
         Card(std::string name);
         /*
          *  Card - getname
@@ -44,14 +55,14 @@ namespace DeckCurator {
          *  Each card is of a spefic(?) type(s) which can be added to the card
          *  @param type Card type to be added to the card.
          */
-        void addType(enum Type type);
+        void addType(enum Type);
         /*
          *  Card - isType
          *
          *  @param type the type in question
          *  @return true if it is that type, otherwise false
          */
-        bool isType(enum Type type) const;
+        bool isType(enum Type) const;
         /*
          *  Card - getType
          *
@@ -70,7 +81,7 @@ namespace DeckCurator {
          *  @param colour The colour to set (use card::Colour)
          *  @param cost   The cost to be set to the colour
          */
-        void setColourCost(int colour, uint8_t cost);
+        void setColourCost(enum Colour, uint8_t cost);
         /*
          *  Card - getColourCost
          *

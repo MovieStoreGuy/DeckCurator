@@ -17,7 +17,7 @@ namespace DeckCurator {
     class Deck {
         public:
             Deck();
-            ~Deck();
+            virtual ~Deck();
 
             /*
              *  Deck - add Card
@@ -62,7 +62,8 @@ namespace DeckCurator {
             uint8_t averageCMC() const;
 
             friend std::ostream& operator<<(std::ostream& os, DeckCurator::Deck& deck);
-        private:
+
+        protected:
             std::vector<Card* > deck;
     };
 }
