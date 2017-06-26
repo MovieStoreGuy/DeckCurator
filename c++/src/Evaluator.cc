@@ -16,7 +16,7 @@ void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const De
         return;
     }
     // Forces the all functions to be run asynchronously
-    evaluators.push_back(std::async(std::launch::async,func,deck));
+    evaluators.push_back(std::async(std::launch::deferred,func,deck));
 }
 
 double DeckCurator::Evaluator::evaluate() {
