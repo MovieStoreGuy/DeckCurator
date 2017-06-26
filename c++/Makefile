@@ -1,7 +1,7 @@
 # Deck Curator -- Makefile
 OS		:= $(shell uname)
 CC		:= g++
-CFLAGS	:= -Wall -Wextra -std=c++11 `python-config --cflags`
+CFLAGS	:= -Wall -Wextra -std=c++11 -O3 `python-config --cflags`
 CLIBS	:= -shared `python-config --ldflag`
 
 ifeq ($(OS),Darwin)

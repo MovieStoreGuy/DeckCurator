@@ -34,11 +34,22 @@ size_t DeckCurator::Deck::size() const {
 }
 
 uint8_t DeckCurator::Deck::averageCMC() const {
+    if (size() == 0) {
+        return 0;
+    }
     uint32_t sum = 0;
     for (size_t i = 0; i < size(); ++i) {
         sum += getCardAt(i)->convertedManaCost();
     }
     return std::ceil(sum / size());
+}
+
+DeckCurator::Deck::iterator DeckCurator::Deck::begin() const{
+    return deck.begin();
+}
+
+DeckCurator::Deck::iterator DeckCurator::Deck::end() const {
+    return deck.end();
 }
 
 std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Deck& deck) {

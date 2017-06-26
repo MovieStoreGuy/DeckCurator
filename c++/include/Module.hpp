@@ -5,6 +5,7 @@
     #include <Python/Python.h>
 #endif
 #include <pybind11/pybind11.h>
+#include <pybind11/functional.h>
 
 #include "Card.hpp"
 #include "Deck.hpp"
