@@ -89,7 +89,7 @@ namespace DeckCurator {
          *  @param colour the colour in question
          *  @return the cost for the colour given, (uint8_t)-1 if out of range
          */
-        uint8_t getColourCost(uint8_t colour) const;
+        uint8_t getColourCost(enum Colour) const;
 
         friend std::ostream& operator<<(std::ostream& os, DeckCurator::Card& card);
     private:

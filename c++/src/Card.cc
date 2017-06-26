@@ -25,8 +25,8 @@ uint8_t DeckCurator::Card::convertedManaCost() const {
     return cost;
 }
 
-uint8_t DeckCurator::Card::getColourCost(uint8_t colour) const {
-    return (colour < COLOUR_COUNT) ? mana[colour] : (uint8_t) -1;
+uint8_t DeckCurator::Card::getColourCost(enum Colour colour) const {
+    return (static_cast<int>(colour) < COLOUR_COUNT) ? mana[colour] : (uint8_t) -1;
 }
 
 void DeckCurator::Card::addType(enum DeckCurator::Card::Type type) {
@@ -45,11 +45,11 @@ std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Card& card)
     os << "Name: "<< card.getName() << std::endl;
     os << "Cost:";
     for (int i = 0; i < COLOUR_COUNT; ++i) {
-        if (card.getColourCost(i) == 0) {
+        if (card.getColourCost(static_cast<enum DeckCurator::Card::Colour>(i)) == 0) {
             // avoid printing the card cost if it is zero
             continue;
         }
-        os << " " << (int) card.getColourCost(i) << " ";
+        os << " " << (int) card.getColourCost(static_cast<enum DeckCurator::Card::Colour>(i)) << " ";
         switch (i) {
             case Card::Colourless:
                 os << "Colourless";

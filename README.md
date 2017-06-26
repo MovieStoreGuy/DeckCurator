@@ -26,6 +26,8 @@ Once the function has been added to the evaluator object, it is then in its own 
     - [ ] Have a accessible docker container
 - [ ] Templated using Jinja
 - [ ] Python binding support
+    - [x] Interface with Python
+    - [ ] Works as C++ would
 - [ ] Support multiple file types for reading / writing
     - [ ] JSON
     - [ ] Plain text
