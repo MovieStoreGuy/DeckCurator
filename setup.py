@@ -3,9 +3,6 @@ import os
 from setuptools import setup
 from setuptools.dist import Distribution
 
-class BinaryDistribution(Distribution):
-    def is_pure(self):
-        return False
 
 setup(name='DeckCurator',
       version='0.2',
@@ -14,6 +11,5 @@ setup(name='DeckCurator',
       author='Sean Marciniak',
       author_email='seanmarciniak@gmail.com',
       license='MIT',
-      include_package_data=True,
-      distclass=BinaryDistribution,
+      test_suite='test.my_module_suite',
       zip_safe=False)
