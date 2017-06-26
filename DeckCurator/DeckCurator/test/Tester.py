@@ -102,5 +102,12 @@ class TestEvaluator(unittest.TestCase):
         self.eval.setDeck(d)
         self.assertEqual(self.eval.evaluate(), 1.0)
 
+    @pytest.mark.timeout(2, method='thread')
+    def test_evalTest(self):
+        d = Deck()
+        self.eval.setDeck(d)
+        self.eval.addEvaluationFunction(lambda x: 0.5)
+        self.assertEqual(self.eval.evaluate(), 0.5)
+
 if __name__ == '__main__':
     unittest.main()
