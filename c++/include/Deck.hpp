@@ -16,6 +16,9 @@
 namespace DeckCurator {
     class Deck {
         public:
+
+            typedef std::vector<Card*>::const_iterator iterator;
+
             Deck();
             virtual ~Deck();
 
@@ -60,6 +63,10 @@ namespace DeckCurator {
             size_t size() const;
 
             uint8_t averageCMC() const;
+
+            iterator begin() const;
+
+            iterator end() const;
 
             friend std::ostream& operator<<(std::ostream& os, DeckCurator::Deck& deck);
 

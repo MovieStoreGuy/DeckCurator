@@ -21,7 +21,6 @@ void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const De
 
 double DeckCurator::Evaluator::evaluate() {
     if (deck == nullptr) {
-        std::cerr << "Deck is not set" << std::endl;
         return 0.0;
     }
     double metric = 1.0;

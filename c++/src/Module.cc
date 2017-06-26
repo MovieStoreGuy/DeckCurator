@@ -55,6 +55,12 @@ PYBIND11_PLUGIN(DeckCurator) {
             [](const DeckCurator::Deck &d) {
                 return "<DeckCurator.deck '" + std::to_string(d.size()) + "'>'";
             }
+        )
+        .def("__len__", &DeckCurator::Deck::size)
+        .def("__iter__",
+            [](DeckCurator::Deck& deck) {
+                return py::make_iterator(deck.begin(), deck.end());
+            }, py::keep_alive<0, 1>()
         );
 
     // Evaluator bindings for Python
