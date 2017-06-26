@@ -13,10 +13,10 @@ void DeckCurator::Evaluator::setDeck(DeckCurator::Deck* deck) {
 
 void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const DeckCurator::Deck*)> func) {
     if (func == nullptr) {
-        abort();
+        return;
     }
     // Forces the all functions to be run asynchronously
-    evaluators.push_back(std::async(std::launch::async,func,deck));
+    evaluators.push_back(std::async(func,deck));
 }
 
 double DeckCurator::Evaluator::evaluate() {
