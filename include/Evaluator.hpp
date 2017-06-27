@@ -7,6 +7,11 @@
 #include <functional>
 #include <vector>
 
+#include <pybind11/pybind11.h>
+#include <pybind11/functional.h>
+#include <pybind11/stl.h>
+#include <pybind11/operators.h>
+
 namespace DeckCurator {
     class Evaluator {
     public:

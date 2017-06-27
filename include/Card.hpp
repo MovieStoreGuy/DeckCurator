@@ -5,6 +5,7 @@
 #include <string>
 #include <set>
 #include <iostream>
+#include <pybind11/pybind11.h>
 
 #define COLOUR_COUNT 6
 

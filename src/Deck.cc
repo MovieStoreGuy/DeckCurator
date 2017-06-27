@@ -58,3 +58,33 @@ std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Deck& deck)
     }
     return os;
 }
+
+namespace py = pybind11;
+
+PYBIND11_PLUGIN(DeckCurator) {
+    py::module m("DeckCurator", "DeckCurator plugin");
+
+    // Deck Bindings for python
+    py::class_<DeckCurator::Deck> Deck(m, "Deck");
+    Deck
+        .def(py::init<>())
+        .def("addCard", &DeckCurator::Deck::addCard)
+        .def("shuffle", &DeckCurator::Deck::shuffle)
+        .def("getCardAt", &DeckCurator::Deck::getCardAt)
+        .def("removeCardAt", &DeckCurator::Deck::removeCardAt)
+        .def("size", &DeckCurator::Deck::size)
+        .def("averageCMC", &DeckCurator::Deck::averageCMC)
+        .def("__repr__",
+            [](const DeckCurator::Deck &d) {
+                return "<DeckCurator.deck '" + std::to_string(d.size()) + "'>'";
+            }
+        )
+        .def("__len__", &DeckCurator::Deck::size)
+        .def("__iter__",
+            [](DeckCurator::Deck& deck) {
+                return py::make_iterator(deck.begin(), deck.end());
+            }, py::keep_alive<0, 1>()
+        );
+
+    return m.ptr();
+}
