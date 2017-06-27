@@ -14,6 +14,7 @@ cpp_args = ['-std=c++11',
             '-Werror',
             '-Wstrict-prototypes',
             '-O2',
+            '-fvisibility=hidden',
             '-mmacosx-version-min=10.8']
 
 ext_modules = [

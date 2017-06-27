@@ -19,8 +19,8 @@ class TestImport(unittest.TestCase):
 class TestCard(unittest.TestCase):
     def setUp(self):
         ''' Run before each test case '''
-        import DeckCurator
-        self.card = DeckCurator.Card("TestCard")
+        from DeckCurator import Card
+        self.card = Card("TestCard")
 
     def tearDown(self):
         self.card = None
