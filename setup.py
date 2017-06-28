@@ -2,10 +2,10 @@
 
 from setuptools import setup, Extension
 from setuptools.command.build_ext import build_ext
-import sys, os
 import setuptools
+import sys, os
 
-__version__ = '0.0.1'
+__version__ = '0.2.1'
 
 
 class get_pybind_include(object):
@@ -30,7 +30,8 @@ ext_modules = [
         include_dirs=[
             # Path to pybind11 headers
             get_pybind_include(),
-            get_pybind_include(user=True)
+            get_pybind_include(user=True),
+            'include'
         ],
         language='c++'
     ),
@@ -93,16 +94,15 @@ class BuildExt(build_ext):
 
 setup(
     name='DeckCurator',
-    version='0.2',
+    version=__version__,
     description='Python bindings for DeckCurator',
     url='http://github.com/RenegadeTech/DeckCurator',
     author='Sean Marciniak',
     author_email='seanmarciniak@gmail.com',
-    # license='MIT',
+    license='MIT',
     install_requires=['pybind11>=1.7'],
     ext_modules=ext_modules,
     cmdclass={'build_ext': BuildExt},
-    test_requires=['pytest'],
-    test_suite='test.my_module_suite',
+    test_suite="tests",
     zip_safe=False,
 )

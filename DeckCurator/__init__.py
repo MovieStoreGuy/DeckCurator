@@ -1,3 +1,4 @@
+from DeckCurator import *
 
 def get_include(*args, **kwargs):
     import os
