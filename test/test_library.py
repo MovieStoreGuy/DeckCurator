@@ -1,17 +1,14 @@
-#! /usr/bin/env python -dOt
+#! /usr/local/bin/python -dOt
 
 import unittest
 import pytest
+import DeckCurator
 
 GLOBAL_RUNTIME = 10
 
 class TestImport(unittest.TestCase):
 
-    def test_import(self):
-        import DeckCurator
-
     def test_libraries(self):
-        import DeckCurator
         self.assertTrue('Card' in dir(DeckCurator))
         self.assertTrue('Deck' in dir(DeckCurator))
         self.assertTrue('Evaluator' in dir(DeckCurator))
@@ -19,7 +16,6 @@ class TestImport(unittest.TestCase):
 class TestCard(unittest.TestCase):
     def setUp(self):
         ''' Run before each test case '''
-        from DeckCurator import Card
         self.card = Card("TestCard")
 
     def tearDown(self):
@@ -55,7 +51,6 @@ class TestCard(unittest.TestCase):
 class TestDeck(unittest.TestCase):
 
     def setUp(self):
-        import DeckCurator
         self.deck = Deck()
 
     def tearDown(self):
@@ -93,7 +88,6 @@ class TestDeck(unittest.TestCase):
 class TestEvaluator(unittest.TestCase):
 
     def setUp(self):
-        import DeckCurator
         self.eval = Evaluator()
 
     def tearDown(self):
