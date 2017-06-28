@@ -25,7 +25,7 @@ const DeckCurator::Card * DeckCurator::Deck::getCardAt(size_t index) const {
 
 void DeckCurator::Deck::removeCardAt(size_t index) {
     if (index < deck.size()) {
-        deck.erase(deck.begin() + index);
+        deck.erase(std::remove(deck.begin(), deck.end(), getCardAt(index)), deck.end());
     }
 }
 

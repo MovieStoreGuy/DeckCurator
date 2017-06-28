@@ -1,11 +1,9 @@
-#include "../include/Module.hpp"
+#include "../include/DeckCurator.hpp"
 
 namespace py = pybind11;
 
 PYBIND11_PLUGIN(DeckCurator) {
     py::module m("DeckCurator", "DeckCurator plugin");
-
-    // Card Bindings for python
     py::class_<DeckCurator::Card> Card(m, "Card");
     Card
         .def(py::init<std::string>())
@@ -70,6 +68,12 @@ PYBIND11_PLUGIN(DeckCurator) {
         .def("setDeck", &DeckCurator::Evaluator::setDeck)
         .def("addEvaluationFunction", &DeckCurator::Evaluator::addEvaluationFunction)
         .def("evaluate", &DeckCurator::Evaluator::evaluate);
+
+    #ifdef VERSION_INFO
+        m.attr("__version__") = py::str(VERSION_INFO);
+    #else
+        m.attr("__version__") = py::str("dev");
+    #endif
 
     return m.ptr();
 }
