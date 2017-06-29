@@ -7,6 +7,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <exception>
 #include <iostream>
 #include <memory>
 #include <vector>

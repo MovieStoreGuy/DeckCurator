@@ -91,11 +91,14 @@ namespace DeckCurator {
          */
         uint8_t getColourCost(enum Colour) const;
 
+        std::set<int> getColours() const;
+
         friend std::ostream& operator<<(std::ostream& os, DeckCurator::Card& card);
     private:
         std::string name;
         uint8_t mana[COLOUR_COUNT];
         std::set<int> types;
+        std::set<int> colours;
     };
 }
 

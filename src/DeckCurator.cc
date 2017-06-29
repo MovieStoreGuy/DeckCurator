@@ -24,6 +24,7 @@ PYBIND11_PLUGIN(DeckCurator) {
         .value("Legendary", DeckCurator::Card::Legendary)
         .value("Creature", DeckCurator::Card::Creature)
         .value("Artifact", DeckCurator::Card::Artifact)
+        .value("Basic_Land", DeckCurator::Card::Basic_Land)
         .value("Land", DeckCurator::Card::Land)
         .value("Instant", DeckCurator::Card::Instant)
         .value("Sorcery", DeckCurator::Card::Sorcery)

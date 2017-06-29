@@ -10,7 +10,8 @@ DeckCurator::Deck::~Deck() {
 
 void DeckCurator::Deck::addCard(Card * card) {
     if (card == nullptr) {
-        return;
+        // I should raise an exception here
+        throw std::invalid_argument("");
     }
     deck.push_back(card);
 }
