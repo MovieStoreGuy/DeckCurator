@@ -13,7 +13,7 @@ void DeckCurator::Card::setColourCost(enum Colour colour, uint8_t cost) {
         if (cost > 0) {
             colours.insert(colour);
         } else {
-            if (colours.find(colour) != colours.end) {
+            if (colours.find(colour) != colours.end()) {
                 colours.erase(colour);
             }
         }
@@ -109,4 +109,9 @@ std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Card& card)
         }
     }
     return os;
+}
+
+bool DeckCurator::operator==(const DeckCurator::Card& lhs, const DeckCurator::Card& rhs) {
+    return lhs.getName() == rhs.getName()
+        && lhs.convertedManaCost() == rhs.convertedManaCost();
 }

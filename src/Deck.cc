@@ -8,10 +8,10 @@ DeckCurator::Deck::~Deck() {
     deck.clear();
 }
 
-void DeckCurator::Deck::addCard(Card * card) {
+void DeckCurator::Deck::addCard(std::shared_ptr<DeckCurator::Card> card) {
     if (card == nullptr) {
         // I should raise an exception here
-        throw std::invalid_argument("");
+        throw std::invalid_argument("Card can not be null");
     }
     deck.push_back(card);
 }
@@ -20,7 +20,7 @@ void DeckCurator::Deck::shuffle() {
     std::random_shuffle(deck.begin(), deck.end());
 }
 
-const DeckCurator::Card * DeckCurator::Deck::getCardAt(size_t index) const {
+const std::shared_ptr<DeckCurator::Card> DeckCurator::Deck::getCardAt(size_t index) const {
     return (index < deck.size()) ? deck[index] : nullptr;
 }
 

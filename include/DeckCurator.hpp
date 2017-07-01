@@ -9,5 +9,6 @@
 #include "Card.hpp"
 #include "Deck.hpp"
 #include "Evaluator.hpp"
+#include "CommanderEvaluator.hpp"
 
 #endif

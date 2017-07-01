@@ -3,10 +3,12 @@
 #include "Evaluator.hpp"
 #include "Deck.hpp"
 
+#include <memory>
+
 namespace DeckCurator {
     class CommanderEvaluator : public Evaluator {
         public:
-            CommanderEvaluator(Deck * deck);
+            CommanderEvaluator(std::shared_ptr<Deck> deck);
     };
 };
 

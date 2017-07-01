@@ -16,10 +16,10 @@
 #include "Card.hpp"
 
 namespace DeckCurator {
-    class Deck {
+    class Deck : public std::enable_shared_from_this<Deck> {
         public:
 
-            typedef std::vector<Card*>::const_iterator iterator;
+            typedef std::vector<std::shared_ptr<Card>>::const_iterator iterator;
 
             Deck();
             virtual ~Deck();
@@ -30,7 +30,7 @@ namespace DeckCurator {
              *
              *  @param card A pointer to a card object
              */
-            void addCard(Card* card);
+            void addCard(std::shared_ptr<Card> card);
 
             /*
              *  Deck - shuffle
@@ -47,7 +47,7 @@ namespace DeckCurator {
              *  @param index The card index in the deck you wish to obtain.
              *  @return A pointer to the card or nullptr if out of range
              */
-            const Card * getCardAt(size_t index) const;
+            const std::shared_ptr<Card> getCardAt(size_t index) const;
 
             /*
              *  Deck - remove card at
@@ -73,7 +73,7 @@ namespace DeckCurator {
             friend std::ostream& operator<<(std::ostream& os, DeckCurator::Deck& deck);
 
         protected:
-            std::vector<Card* > deck;
+            std::vector<std::shared_ptr<Card>> deck;
     };
 }
 

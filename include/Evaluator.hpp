@@ -3,8 +3,10 @@
 
 #include "Deck.hpp"
 #include <cstdlib>
+#include <exception>
 #include <future>
 #include <functional>
+#include <memory>
 #include <vector>
 
 namespace DeckCurator {
@@ -16,13 +18,13 @@ namespace DeckCurator {
          *
          *  @param deck The deck to evaluate
          */
-        void setDeck(DeckCurator::Deck* deck);
+        void setDeck(std::shared_ptr<DeckCurator::Deck> deck);
         /*
          *  Evaluator - addEvaluationFunction
          *
          *  @param func The function to add to the evaluation step
          */
-        void addEvaluationFunction(std::function<double(const DeckCurator::Deck*)> func);
+        void addEvaluationFunction(std::function<double(const std::shared_ptr<DeckCurator::Deck>)> func);
         /*
          *  Evaluator - evaluate
          *
@@ -31,8 +33,8 @@ namespace DeckCurator {
          */
         double evaluate();
     private:
-        DeckCurator::Deck* deck;
-        std::vector<std::future<double> > evaluators;
+        std::shared_ptr<DeckCurator::Deck> deck;
+        std::vector<std::future<double>> evaluators;
     };
 };
 

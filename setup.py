@@ -26,7 +26,7 @@ class get_pybind_include(object):
 ext_modules = [
     Extension(
         'DeckCurator',
-         ['src/Card.cc', 'src/Deck.cc', 'src/Evaluator.cc', 'src/DeckCurator.cc'],
+         ['src/' + f for f in os.listdir('src/')],
         include_dirs=[
             # Path to pybind11 headers
             get_pybind_include(),

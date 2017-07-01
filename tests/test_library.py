@@ -12,6 +12,7 @@ class TestImport(unittest.TestCase):
         self.assertTrue('Card' in dir(DeckCurator))
         self.assertTrue('Deck' in dir(DeckCurator))
         self.assertTrue('Evaluator' in dir(DeckCurator))
+        self.assertTrue('CommanderEvaluator' in dir(DeckCurator))
 
 class TestCard(unittest.TestCase):
     def setUp(self):
@@ -48,6 +49,10 @@ class TestCard(unittest.TestCase):
         self.assertEqual(self.card.convertedManaCost(), 3)
         self.assertEqual(self.card.getColourCost(Card.Colorless), 3)
 
+    def test_compareLikeness(self):
+        c = Card("TestCard")
+        self.assertEqual(self.card, c)
+
 class TestDeck(unittest.TestCase):
 
     def setUp(self):
@@ -75,7 +80,8 @@ class TestDeck(unittest.TestCase):
 
     def test_NullCard(self):
         self.assertEqual(len(self.deck), 0)
-        self.deck.addCard(None)
+        with self.assertRaises(Exception) as context:
+            self.deck.addCard(None)
         self.assertEqual(len(self.deck), 0)
 
     def test_removal(self):
@@ -86,12 +92,16 @@ class TestDeck(unittest.TestCase):
         self.assertEqual(len(self.deck), 0)
 
 class TestEvaluator(unittest.TestCase):
-
     def setUp(self):
         self.eval = Evaluator()
 
     def tearDown(self):
         self.eval = None
+
+    @pytest.mark.timeout(2, method='thread')
+    def test_noneFunction(self):
+        with self.assertRaises(Exception) as e:
+            self.eval(None)
 
     @pytest.mark.timeout(2, method='thread')
     def test_addFunc(self):
@@ -115,5 +125,31 @@ class TestEvaluator(unittest.TestCase):
         self.eval.addEvaluationFunction(lambda x: 0.5)
         self.assertEqual(self.eval.evaluate(), 0.5)
 
+class TestCommander(unittest.TestCase):
+
+    def test_NullDeck(self):
+        with self.assertRaises(Exception) as e:
+            CommanderEvaluator(None)
+
+    def test_BasicTest(self):
+        d = Deck()
+        c = Card("TestCommander")
+        c.setColourCost(Card.Colorless, 1)
+        c.setColourCost(Card.Red, 1)
+        c.addType(Card.Legendary)
+        c.addType(Card.Creature)
+        d.addCard(c)
+        for i in range(99):
+            l = Card("TestLand")
+            c.setColourCost(Card.Colorless, 1)
+            c.setColourCost(Card.Red, 1)
+            c.addType(Card.Basic_Land)
+            d.addCard(c)
+        self.assertEqual(d.size(), 100)
+        self.assertEqual(len(d), 100)
+        self.assertEqual(CommanderEvaluator(d).evaluate(), 1.0)
+
+    def test_LegendaryRule(self):
+        d = Deck()
 if __name__ == '__main__':
     unittest.main()

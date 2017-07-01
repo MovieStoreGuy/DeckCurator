@@ -1,17 +1,19 @@
 #include "../include/Evaluator.hpp"
 
-DeckCurator::Evaluator::Evaluator() {
+namespace dc = DeckCurator;
+
+dc::Evaluator::Evaluator() {
     this->deck = nullptr;
 }
 
-void DeckCurator::Evaluator::setDeck(DeckCurator::Deck* deck) {
+void dc::Evaluator::setDeck(std::shared_ptr<DeckCurator::Deck> deck) {
     if (deck == nullptr) {
-        return;
+        throw std::invalid_argument("Can not have null deck");
     }
     this->deck = deck;
 }
 
-void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const DeckCurator::Deck*)> func) {
+void dc::Evaluator::addEvaluationFunction(std::function<double(const std::shared_ptr<dc::Deck>)> func) {
     if (func == nullptr) {
         return;
     }
@@ -19,7 +21,7 @@ void DeckCurator::Evaluator::addEvaluationFunction(std::function<double(const De
     evaluators.push_back(std::async(std::launch::deferred,func,deck));
 }
 
-double DeckCurator::Evaluator::evaluate() {
+double dc::Evaluator::evaluate() {
     if (deck == nullptr) {
         return 0.0;
     }
