@@ -22,10 +22,10 @@ class TestCard(unittest.TestCase):
     def tearDown(self):
         self.card = None
 
-    def test_name(self):
+    def test_Name(self):
         self.assertEqual(self.card.getName(), "TestCard")
 
-    def test_notType(self):
+    def test_NotType(self):
         self.assertFalse(self.card.isType(Card.Land))
         self.assertFalse(self.card.isType(Card.Legendary))
         self.assertFalse(self.card.isType(Card.Creature))
@@ -41,15 +41,15 @@ class TestCard(unittest.TestCase):
         self.assertFalse(self.card.isType(Card.Instant))
         self.assertFalse(self.card.isType(Card.Sorcery))
 
-    def test_manacost(self):
+    def test_ManaCost(self):
         self.assertEqual(self.card.convertedManaCost(), 0)
 
-    def test_updateManaCost(self):
+    def test_UpdateManaCost(self):
         self.card.setColourCost(Card.Colourless, 3)
         self.assertEqual(self.card.convertedManaCost(), 3)
         self.assertEqual(self.card.getColourCost(Card.Colorless), 3)
 
-    def test_compareLikeness(self):
+    def test_CompareEqual(self):
         c = Card("TestCard")
         self.assertEqual(self.card, c)
 
@@ -99,17 +99,18 @@ class TestEvaluator(unittest.TestCase):
         self.eval = None
 
     @pytest.mark.timeout(2, method='thread')
-    def test_noneFunction(self):
+    def test_NoneFunction(self):
         with self.assertRaises(Exception) as e:
             self.eval(None)
 
     @pytest.mark.timeout(2, method='thread')
-    def test_addFunc(self):
+    def test_AddFunc(self):
+        ''' Function should return 0 since no deck added '''
         self.eval.addEvaluationFunction(lambda x : x.size() * 1.0)
         self.assertEqual(self.eval.evaluate(), 0.0)
 
     @pytest.mark.timeout(2, method='thread')
-    def test_blankevalation(self):
+    def test_Blankevalation(self):
         self.assertEqual(self.eval.evaluate(), 0.0)
 
     @pytest.mark.timeout(2, method='thread')
@@ -119,11 +120,19 @@ class TestEvaluator(unittest.TestCase):
         self.assertEqual(self.eval.evaluate(), 1.0)
 
     @pytest.mark.timeout(2, method='thread')
-    def test_evalTest(self):
+    def test_EvalTest(self):
         d = Deck()
         self.eval.setDeck(d)
         self.eval.addEvaluationFunction(lambda x: 0.5)
         self.assertEqual(self.eval.evaluate(), 0.5)
+
+    @pytest.mark.timeout(2, method='thread')
+    def test_MetricValue(self):
+        d = Deck()
+        d.addCard(Card("TestCard"))
+        self.eval.addEvaluationFunction(lambda x: x * -1.0)
+        self.eval.setDeck(d)
+        self.assertEqual(self.eval.evaluate(), 0.0)
 
 class TestCommander(unittest.TestCase):
 
@@ -141,15 +150,47 @@ class TestCommander(unittest.TestCase):
         d.addCard(c)
         for i in range(99):
             l = Card("TestLand")
-            c.setColourCost(Card.Colorless, 1)
-            c.setColourCost(Card.Red, 1)
-            c.addType(Card.Basic_Land)
-            d.addCard(c)
+            l.setColourCost(Card.Colorless, 1)
+            l.setColourCost(Card.Red, 1)
+            l.addType(Card.Basic_Land)
+            d.addCard(l)
         self.assertEqual(d.size(), 100)
         self.assertEqual(len(d), 100)
         self.assertEqual(CommanderEvaluator(d).evaluate(), 1.0)
 
-    def test_LegendaryRule(self):
+    def test_NonLegendaryComamander(self):
+        c = Card("TestCommander")
+        # Missing Legendary
+        c.addType(Card.Creature)
+        c.setColourCost(Card.Black, 1)
         d = Deck()
+        d.addCard(c)
+        for land in range(99):
+            l = Card("TestLand")
+            l.setColourCost(Card.Black, 0)
+            l.addType(Card.Basic_Land)
+            d.addCard(l)
+        self.assertEqual(d.size(), 100)
+        self.assertEqual(len(d), 100)
+        self.assertEqual(CommanderEvaluator(d).evaluate(), 0.0)
+
+    def test_IncorrectSize(self):
+        d = Deck()
+        # Incorrect Deck Size
+        for _ in range(101):
+            d.addCard(Card("TestCard"))
+        self.assertFalse(len(d) == 100)
+        self.assertEqual(CommanderEvaluator(d).evaluate(), 0.0)
+
+    def test_NonMultiples(self):
+        d = Deck()
+        for _ in range(100):
+            c = Card("TestCard")
+            c.setColourCost(Card.Red, 10)
+            c.addType(Card.Legendary)
+            c.addType(Card.Creature)
+            d.addCard(c)
+        self.assertEqual(CommanderEvaluator(d).evaluate(), 0.0)
+
 if __name__ == '__main__':
     unittest.main()
