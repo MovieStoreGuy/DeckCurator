@@ -140,6 +140,11 @@ class TestCommander(unittest.TestCase):
         with self.assertRaises(Exception) as e:
             CommanderEvaluator(None)
 
+    def test_CommanderIsEvaluator(self):
+        d = Deck()
+        commEval = CommanderEvaluator(d)
+        self.assertTrue(isinstance(commEval, Evaluator))
+
     def test_BasicTest(self):
         d = Deck()
         c = Card("TestCommander")
