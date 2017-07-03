@@ -15,6 +15,15 @@ PYBIND11_PLUGIN(DeckCurator) {
         .def("convertedManaCost", &DeckCurator::Card::convertedManaCost)
         .def("setColourCost", &DeckCurator::Card::setColourCost)
         .def("getColourCost", &DeckCurator::Card::getColourCost)
+        .def("__eq__", [](const py::object lhs, const py::object rhs)->bool{
+            try {
+                DeckCurator::Card* clhs = lhs.cast<DeckCurator::Card*>();
+                DeckCurator::Card* crhs = lhs.cast<DeckCurator::Card*>();
+                return *clhs == *crhs;
+            } catch (py::cast_error ) {
+                return false;
+            }
+        })
         .def("__repr__",
             [](const DeckCurator::Card &c) {
                 return "<DeckCurator.Card '" + c.getName() + ":" + std::to_string(c.convertedManaCost()) + "'>";
@@ -51,6 +60,12 @@ PYBIND11_PLUGIN(DeckCurator) {
         .def("removeCardAt", &DeckCurator::Deck::removeCardAt)
         .def("size", &DeckCurator::Deck::size)
         .def("averageCMC", &DeckCurator::Deck::averageCMC)
+        .def("getManaCurve", &DeckCurator::Deck::getManaCurve)
+        .def_property_static("MAX_MANA_COST", [](py::object ){
+            return DeckCurator::Deck::MAX_MANA_COST;
+        }, [](py::object o) {
+            DeckCurator::Deck::MAX_MANA_COST = py::cast<uint8_t>(o);
+        })
         .def("__repr__",
             [](const DeckCurator::Deck &d) {
                 return "<DeckCurator.deck '" + std::to_string(d.size()) + "'>'";
