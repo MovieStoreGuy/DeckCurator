@@ -93,6 +93,8 @@ namespace DeckCurator{
          */
         uint8_t getColourCost(enum Colour) const;
 
+        bool isColour(enum Colour) const;
+
         std::set<int> getColours() const;
 
         friend std::ostream& operator<<(std::ostream& os, DeckCurator::Card& card);

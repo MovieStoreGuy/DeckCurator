@@ -21,6 +21,8 @@ namespace DeckCurator {
 
             typedef std::vector<std::shared_ptr<Card>>::const_iterator iterator;
 
+            static uint8_t MAX_MANA_COST;
+
             Deck();
             virtual ~Deck();
 
@@ -69,6 +71,12 @@ namespace DeckCurator {
             iterator begin() const;
 
             iterator end() const;
+
+            std::shared_ptr<Deck> filterByType(enum Card::Type);
+
+            std::shared_ptr<Deck> filterByColour(enum Card::Colour);
+
+            std::vector<uint32_t> getManaCurve();
 
             friend std::ostream& operator<<(std::ostream& os, DeckCurator::Deck& deck);
 

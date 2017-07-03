@@ -44,6 +44,10 @@ bool DeckCurator::Card::isType(enum DeckCurator::Card::Type type) const {
     return types.find(type) != types.end();
 }
 
+bool DeckCurator::Card::isColour(enum DeckCurator::Card::Colour colour) const {
+    return colours.find(colour) != colours.end();
+}
+
 std::set<int> DeckCurator::Card::getTypes() const {
     return types;
 }
