@@ -1,60 +1,68 @@
 #include "../include/DeckCurator.hpp"
 
 namespace py = pybind11;
+namespace dc = DeckCurator;
 
 PYBIND11_PLUGIN(DeckCurator) {
     py::module m("DeckCurator", "DeckCurator plugin");
     // Card Class
-    py::class_<DeckCurator::Card, std::shared_ptr<DeckCurator::Card>> Card(m, "Card");
+    py::class_<dc::Card, std::shared_ptr<dc::Card>> Card(m, "Card");
     Card
-        .def(py::init<std::string>())
-        .def("getName", &DeckCurator::Card::getName)
-        .def("addType", &DeckCurator::Card::addType)
-        .def("isType", &DeckCurator::Card::isType)
-        .def("getTypes", &DeckCurator::Card::getTypes)
-        .def("convertedManaCost", &DeckCurator::Card::convertedManaCost)
-        .def("setColourCost", &DeckCurator::Card::setColourCost)
-        .def("getColourCost", &DeckCurator::Card::getColourCost)
+        .def(py::init<std::string>(),
+            py::arg("Name") = "")
+        .def("getName", &dc::Card::getName)
+        .def("addType", &dc::Card::addType, py::arg("Type"))
+        .def("isType", &dc::Card::isType, py::arg("Type"))
+        .def("getTypes", &dc::Card::getTypes)
+        .def("convertedManaCost", &dc::Card::convertedManaCost)
+        .def("setColourCost", &dc::Card::setColourCost,
+            py::arg("Colour") = 0,
+            py::arg("Cost") = 0)
+        .def("getColourCost", &dc::Card::getColourCost,
+            py::arg("Colour") = 0)
         .def("__eq__", [](const py::object lhs, const py::object rhs)->bool{
             try {
-                DeckCurator::Card* clhs = lhs.cast<DeckCurator::Card*>();
-                DeckCurator::Card* crhs = lhs.cast<DeckCurator::Card*>();
+                dc::Card* clhs = lhs.cast<dc::Card*>();
+                dc::Card* crhs = lhs.cast<dc::Card*>();
+                // this will call the '==' defined in the DeckCurator namespace
                 return *clhs == *crhs;
             } catch (py::cast_error ) {
                 return false;
             }
+            return false;
         })
         .def("__repr__",
-            [](const DeckCurator::Card &c) {
+            [](const dc::Card &c) {
                 return "<DeckCurator.Card '" + c.getName() + ":" + std::to_string(c.convertedManaCost()) + "'>";
             }
         );
 
-    py::enum_<enum DeckCurator::Card::Type> (Card, "Type")
-        .value("Legendary", DeckCurator::Card::Legendary)
-        .value("Creature", DeckCurator::Card::Creature)
-        .value("Artifact", DeckCurator::Card::Artifact)
-        .value("Basic_Land", DeckCurator::Card::Basic_Land)
-        .value("Land", DeckCurator::Card::Land)
-        .value("Instant", DeckCurator::Card::Instant)
-        .value("Sorcery", DeckCurator::Card::Sorcery)
+    py::enum_<enum dc::Card::Type> (Card, "Type")
+        .value("Legendary",  dc::Card::Legendary)
+        .value("Creature",   dc::Card::Creature)
+        .value("Artifact",   dc::Card::Artifact)
+        .value("Basic_Land", dc::Card::Basic_Land)
+        .value("Land",       dc::Card::Land)
+        .value("Instant",    dc::Card::Instant)
+        .value("Sorcery",    dc::Card::Sorcery)
         .export_values();
 
     py::enum_<enum DeckCurator::Card::Colour> (Card, "Colour")
-        .value("Colourless", DeckCurator::Card::Colourless)
-        .value("Colorless", DeckCurator::Card::Colorless)
-        .value("Red", DeckCurator::Card::Red)
-        .value("Green", DeckCurator::Card::Green)
-        .value("Blue", DeckCurator::Card::Blue)
-        .value("Black", DeckCurator::Card::Black)
-        .value("White", DeckCurator::Card::White)
+        .value("Colourless", dc::Card::Colourless)
+        .value("Colorless",  dc::Card::Colorless)
+        .value("Red",        dc::Card::Red)
+        .value("Green",      dc::Card::Green)
+        .value("Blue",       dc::Card::Blue)
+        .value("Black",      dc::Card::Black)
+        .value("White",      dc::Card::White)
         .export_values();
 
     // Deck Bindings for python
-    py::class_<DeckCurator::Deck, std::shared_ptr<DeckCurator::Deck>> Deck(m, "Deck");
+    py::class_<dc::Deck, std::shared_ptr<dc::Deck>> Deck(m, "Deck");
     Deck
         .def(py::init<>())
-        .def("addCard", &DeckCurator::Deck::addCard)
+        .def("addCard", &DeckCurator::Deck::addCard,
+            py::arg("Card") = nullptr)
         .def("shuffle", &DeckCurator::Deck::shuffle)
         .def("getCardAt", &DeckCurator::Deck::getCardAt)
         .def("removeCardAt", &DeckCurator::Deck::removeCardAt)
@@ -87,7 +95,8 @@ PYBIND11_PLUGIN(DeckCurator) {
         .def("evaluate", &DeckCurator::Evaluator::evaluate);
 
     py::class_<DeckCurator::CommanderEvaluator> CommanderEval(m, "CommanderEvaluator", Evaluator);
-    CommanderEval.def(py::init<std::shared_ptr<DeckCurator::Deck>>());
+    CommanderEval.def(py::init<std::shared_ptr<DeckCurator::Deck>>(),
+        py::arg("Deck") = nullptr);
 
     m.attr("__version__") = py::str("dev");
 
