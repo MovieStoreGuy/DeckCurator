@@ -16,10 +16,10 @@ PYBIND11_PLUGIN(DeckCurator) {
         .def("getTypes", &dc::Card::getTypes)
         .def("convertedManaCost", &dc::Card::convertedManaCost)
         .def("setColourCost", &dc::Card::setColourCost,
-            py::arg("Colour") = 0,
+            py::arg("Colour"),
             py::arg("Cost") = 0)
         .def("getColourCost", &dc::Card::getColourCost,
-            py::arg("Colour") = 0)
+            py::arg("Colour"))
         .def("__eq__", [](const py::object lhs, const py::object rhs)->bool{
             try {
                 dc::Card* clhs = lhs.cast<dc::Card*>();

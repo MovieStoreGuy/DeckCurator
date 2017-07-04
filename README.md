@@ -21,13 +21,22 @@ std::cout << "The Deck Metric is: " << eval->evaluate() << std::endl;
 ```
 Once the function has been added to the evaluator object, it is then in its own async block so that the process of one function does not block another.
 
+*Adding a function in Python*
+```Python
+Eval  = DeckCurator.Evaluator()
+Deck  = DeckCurator.Deck()
+# Build Deck ...
+Eval.addEvaluationFunction(lambda x: ''' Evaluator function here ''')
+print "The Deck Metric is: {}".format(Eval.evaluate())
+```
+
 ## Project Goals
 - [ ] Be able to work as microservice
     - [ ] Have a accessible docker container
 - [ ] Templated using Jinja
-- [ ] Python binding support
+- [x] Python binding support
     - [x] Interface with Python
-    - [ ] Works as C++ would
+    - [x] Works as C++ would
 - [ ] Support multiple file types for reading / writing
     - [ ] JSON
     - [ ] Plain text

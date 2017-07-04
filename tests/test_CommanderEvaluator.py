@@ -4,9 +4,17 @@ from DeckCurator import *
 
 class TestCommander(unittest.TestCase):
 
+    def test_NoParams(self):
+        with self.assertRaises(Exception) as e:
+            CommanderEvaluator()
+
     def test_NullDeck(self):
         with self.assertRaises(Exception) as e:
             CommanderEvaluator(None)
+
+    def test_SupportsNamedParam(self):
+        d = Deck()
+        CommanderEvaluator(Deck = d)
 
     def test_CommanderIsEvaluator(self):
         d = Deck()
