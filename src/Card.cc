@@ -10,6 +10,13 @@ DeckCurator::Card::Card(std::string name) {
 void DeckCurator::Card::setColourCost(enum Colour colour, uint8_t cost) {
     if (colour < COLOUR_COUNT) {
         mana[colour] = cost;
+        if (cost > 0) {
+            colours.insert(colour);
+        } else {
+            if (colours.find(colour) != colours.end()) {
+                colours.erase(colour);
+            }
+        }
     }
 }
 
@@ -37,8 +44,16 @@ bool DeckCurator::Card::isType(enum DeckCurator::Card::Type type) const {
     return types.find(type) != types.end();
 }
 
+bool DeckCurator::Card::isColour(enum DeckCurator::Card::Colour colour) const {
+    return colours.find(colour) != colours.end();
+}
+
 std::set<int> DeckCurator::Card::getTypes() const {
     return types;
+}
+
+std::set<int> DeckCurator::Card::getColours() const {
+    return colours;
 }
 
 std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Card& card) {
@@ -98,4 +113,9 @@ std::ostream& DeckCurator::operator<<(std::ostream& os, DeckCurator::Card& card)
         }
     }
     return os;
+}
+
+bool DeckCurator::operator==(const DeckCurator::Card& lhs, const DeckCurator::Card& rhs) {
+    return lhs.getName() == rhs.getName()
+        && lhs.convertedManaCost() == rhs.convertedManaCost();
 }

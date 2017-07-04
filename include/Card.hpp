@@ -2,14 +2,15 @@
 #define __DECK_CURATOR__CARD_H
 
 #include <cstdint>
+#include <memory>
 #include <string>
 #include <set>
 #include <iostream>
 
 #define COLOUR_COUNT 6
 
-namespace DeckCurator {
-    class Card {
+namespace DeckCurator{
+    class Card : public std::enable_shared_from_this<Card> {
     public:
         // Static definition of card types
         // Note: The order defined is the order printed
@@ -17,6 +18,7 @@ namespace DeckCurator {
             Legendary,
             Creature,
             Artifact,
+            Basic_Land,
             Land,
             Instant,
             Sorcery,
@@ -91,11 +93,19 @@ namespace DeckCurator {
          */
         uint8_t getColourCost(enum Colour) const;
 
+        bool isColour(enum Colour) const;
+
+        std::set<int> getColours() const;
+
         friend std::ostream& operator<<(std::ostream& os, DeckCurator::Card& card);
+
+        friend bool operator==(const Card& lhs, const Card& rhs);
+
     private:
         std::string name;
         uint8_t mana[COLOUR_COUNT];
         std::set<int> types;
+        std::set<int> colours;
     };
 }
 
