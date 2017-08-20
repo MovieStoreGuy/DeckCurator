@@ -101,8 +101,9 @@ setup(
     author_email='seanmarciniak@gmail.com',
     license='MIT',
     install_requires=['pybind11>=1.7'],
+    tests_require=['pytest'],
     ext_modules=ext_modules,
-    cmdclass={'build_ext': BuildExt},
+    cmdclass={'build_ext': BuildExt, 'test': PyTest},
     test_suite="tests",
     zip_safe=False,
 )
