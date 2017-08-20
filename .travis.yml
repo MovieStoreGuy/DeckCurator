@@ -12,5 +12,4 @@ addons:
             - python3.5-dev
 
 script:
-    - pip install ./setup.py
-    - python setup.py test
+    - python setup.py build_ext

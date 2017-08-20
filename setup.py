@@ -103,7 +103,7 @@ setup(
     install_requires=['pybind11>=1.7'],
     tests_require=['pytest'],
     ext_modules=ext_modules,
-    cmdclass={'build_ext': BuildExt, 'test': PyTest},
+    cmdclass={'build_ext': BuildExt},
     test_suite="tests",
     zip_safe=False,
 )
