@@ -2,6 +2,8 @@
 This project looks at evaluating Magic The Gathering™ decks to see how well
 they preform against different metric functions.
 
+## Build Status
+[![Build Status](https://travis-ci.org/RenegadeTech/DeckCurator.svg?branch=master)](https://travis-ci.org/RenegadeTech/DeckCurator)
 
 ## How it works
 Once you have constructed a deck, you can specify what metrics to perform against your deck. The library keeps object as constant when it is being evaluated so that operations can happen in parallel without side affects.
