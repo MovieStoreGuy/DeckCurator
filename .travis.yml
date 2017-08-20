@@ -11,5 +11,8 @@ addons:
             - python3.5
             - python3.5-dev
 
+install:
+    - pip install pybind11 pytest
+
 script:
     - python setup.py build_ext
