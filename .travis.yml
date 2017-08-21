@@ -2,6 +2,7 @@
 language: cpp
 
 install:
+    - apt-get install clang-3.8
     - export CC="g++"
     - pip install pybind11 pytest
 
