@@ -1,8 +1,10 @@
 ---
 language: cpp
 
+sudo: true
+
 install:
-    - apt-get install clang-3.8
+    - sudo apt-get install clang-3.8
     - export CC="g++"
     - pip install pybind11 pytest
 
