@@ -2,7 +2,7 @@
 language: cpp
 
 install:
-    - export GCC="g++"
+    - export CC="g++"
     - pip install pybind11 pytest
 
 script:
